@@ -82,6 +82,33 @@ To adapt this code for different use cases:
 - **Continuous Replication**: Set `Continuous = true` for ongoing replication instead of a one-time sync
 - **Different Channel Strategy**: Update the `Channels` array in the collection configuration
 
+## Couchbase Sync Gateway Configuration
+
+### Access Control and Data Validation
+
+To enable the user-specific channel access in Couchbase, the following JavaScript function needs to be configured on the collection's "Access Control and Data Validation" settings in Couchbase:
+
+```javascript
+function (doc, oldDoc, meta) {
+  channel("user::" + doc.userId);
+}
+```
+
+This function routes each document to a user-specific channel based on the document's `userId` field. This ensures that:
+
+1. Documents are only accessible to users who have access to that specific channel
+2. The sync process filters documents based on the user's channel access
+3. Data remains properly segmented per user
+
+### How to Configure in Couchbase
+
+1. Log in to the Couchbase Server Admin Console
+2. Navigate to the "Collections" section for your bucket
+3. Select the appropriate scope and collection (in our case, "inventory.specifcusrtest")
+4. Click on "Access Control and Data Validation" settings
+5. Paste the JavaScript function into the editor
+6. Save the configuration
+
 ## Troubleshooting
 
 Common issues:
@@ -89,6 +116,7 @@ Common issues:
 1. **Authentication Failure**: Check that your username and password match those configured on the Sync Gateway
 2. **Connection Issues**: Verify the Sync Gateway URL is correct and accessible
 3. **Channel Access**: Ensure the specified channels exist and the authenticated user has access to them
+4. **Sync Function Errors**: Verify that the sync function is correctly configured and does not contain syntax errors
 
 ## License
 
