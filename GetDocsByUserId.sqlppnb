@@ -1,0 +1,1 @@
+{"cells":[{"kind":2,"language":"SQL++","value":"SELECT * FROM `travel-sample`.`inventory`.`specifcusrtest` WHERE userId = \"mosel2\";\r\n"}]}
