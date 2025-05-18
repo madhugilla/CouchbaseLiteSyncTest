@@ -11,18 +11,13 @@ namespace SyncTestiConsole
             // Set up configuration to read from user secrets
             var configuration = new ConfigurationBuilder()
                 .AddUserSecrets<Program>()
-                .Build();
-            
-            // Read secrets
-            var gatewayUrlString = configuration["CouchbaseSettings:GatewayUrl"];
-            var username = configuration["CouchbaseSettings:Username"];
-            var password = configuration["CouchbaseSettings:Password"];
-            
-            if (string.IsNullOrEmpty(gatewayUrlString) || string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
-            {
-                Console.WriteLine("Error: Connection settings not found in secrets. Please set up user secrets with the required values.");
-                return Task.CompletedTask;
-            }
+                .Build();            // Read secrets and validate with simplified exception handling
+            var gatewayUrlString = configuration["CouchbaseSettings:GatewayUrl"] 
+                ?? throw new InvalidOperationException("Gateway URL not found in configuration.");
+            var username = configuration["CouchbaseSettings:Username"] 
+                ?? throw new InvalidOperationException("Username not found in configuration.");
+            var password = configuration["CouchbaseSettings:Password"] 
+                ?? throw new InvalidOperationException("Password not found in configuration.");
 
             Collection airlineCollection, spedificusrtestCollection;
 
