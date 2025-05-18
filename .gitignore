@@ -1,0 +1,30 @@
+# .NET build output
+bin/
+obj/
+
+# VS files
+.vs/
+*.user
+*.suo
+*.userprefs
+*.sln.docstates
+
+# Local database files
+CouchbaseLite/
+
+# User-specific files
+*.user
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+
+# Visual Studio for Mac
+.vscode/
+*.pidb
+
+# Temporary files
+*.tmp
+*.log
+*~
